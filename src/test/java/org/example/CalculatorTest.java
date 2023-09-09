@@ -15,5 +15,8 @@ class CalculatorTest {
 
     @org.junit.jupiter.api.Test
     void subtract() {
+        Calculator calculator = new Calculator();
+        assertEquals( 0, calculator.subtract(1.4F, 1.4F), 0.001);
+        assertNotEquals(2, calculator.subtract(1.4F, 1.4F));
     }
 }
