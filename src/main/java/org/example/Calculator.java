@@ -41,6 +41,8 @@ public class Calculator {
 
 
     public static void main(String[] args) {
+
+
         Calculator calculator = new Calculator();
         Scanner scanner = new Scanner(System.in);
         String string = scanner.nextLine();
@@ -82,12 +84,18 @@ public class Calculator {
             for (int i = 0; i < arrayOfStrings.size(); i++) {
                 String currentValue = arrayOfStrings.get(i);
 
-                if (currentValue.equals("*")) {
+                if (currentValue.equals("*") || currentValue.equals("/")) {
+
                     if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                        float result = 0;
                         float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
                         float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
-                        float result = calculator.multiply(firstNumber, secondNumber);
 
+                        if (currentValue.equals("*")) {
+                            result = calculator.multiply(firstNumber,secondNumber);
+                        } else if (currentValue.equals("/")) {
+                            result = calculator.divide(firstNumber, secondNumber); // Corrected division operation
+                        }
                         // Update the result in the ArrayList and remove the used operands and operator
                         arrayOfStrings.set(i - 1, String.valueOf(result));
                         arrayOfStrings.remove(i);
@@ -97,6 +105,25 @@ public class Calculator {
                 }
             }
 
+
+
+        for (int i = 0; i < arrayOfStrings.size(); i++) {
+            String currentValue = arrayOfStrings.get(i);
+
+            if (currentValue.equals("/")) {
+                if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                    float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
+                    float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
+                    float result = calculator.divide(firstNumber, secondNumber);
+
+                    // Update the result in the ArrayList and remove the used operands and operator
+                    arrayOfStrings.set(i - 1, String.valueOf(result));
+                    arrayOfStrings.remove(i);
+                    arrayOfStrings.remove(i);
+                    i--; // Adjust the index after removing elements
+                }
+            }
+        }
         System.out.println(arrayOfStrings);
 
 
@@ -108,6 +135,23 @@ public class Calculator {
                     float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
                     float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
                     float result = calculator.add(firstNumber, secondNumber);
+
+                    // Update the result in the ArrayList and remove the used operands and operator
+                    arrayOfStrings.set(i - 1, String.valueOf(result));
+                    arrayOfStrings.remove(i);
+                    arrayOfStrings.remove(i);
+                    i--; // Adjust the index after removing elements
+                }
+            }
+        }
+        for (int i = 0; i < arrayOfStrings.size(); i++) {
+            String currentValue = arrayOfStrings.get(i);
+
+            if (currentValue.equals("**")) {
+                if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                    float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
+                    float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
+                    float result = calculator.subtract(firstNumber, secondNumber);
 
                     // Update the result in the ArrayList and remove the used operands and operator
                     arrayOfStrings.set(i - 1, String.valueOf(result));
