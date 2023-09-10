@@ -5,6 +5,7 @@ import java.util.Scanner;
 import java.lang.Math;
 public class Calculator {
     float result;
+
     public float getResult() {
         return result;
     }
@@ -13,25 +14,29 @@ public class Calculator {
         this.result = result;
     }
 
-    public float add(float x, float y){
+    public float add(float x, float y) {
         return x + y;
     }
-    public float subtract(float x, float y){
+
+    public float subtract(float x, float y) {
         return x - y;
     }
-    public float multiply(float x, float y){
+
+    public float multiply(float x, float y) {
         return x * y;
     }
-    public float divide(float x, float y){
-        return x/y;
+
+    public float divide(float x, float y) {
+        return x / y;
     }
-    public double squareroot(float x){
+
+    public double squareroot(float x) {
         return Math.sqrt(x);
     } // caret ^ symbol
 
-    public double toPower(float x, float y){
-       double square = Math.pow((double) x, (double) y);
-       return square;
+    public double toPower(float x, float y) {
+        double square = Math.pow((double) x, (double) y);
+        return square;
     } // ** symbol
 
 
@@ -41,10 +46,10 @@ public class Calculator {
         String string = scanner.nextLine();
 
 
-        String stringArray []  = string.split(" ");
+        String stringArray[] = string.split(" ");
 
 
-        ArrayList <String> arrayOfStrings = new ArrayList<>();
+        ArrayList<String> arrayOfStrings = new ArrayList<>();
 
         for (int i = 0; i < stringArray.length; i++) {
             arrayOfStrings.add(stringArray[i]);
@@ -52,49 +57,68 @@ public class Calculator {
         }
 
 
-
-
-
         // 12 + 12 - 2 * 5
         // 12 + 12 - 10
         // 24 + 10
         // 34
+        System.out.println(arrayOfStrings);
+        for (int i = 0; i < arrayOfStrings.size(); i++) {
+            String currentValue = arrayOfStrings.get(i);
+
+            if (currentValue.equals("**")) {
+                if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                    float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
+                    float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
+                    double result = calculator.toPower(firstNumber, secondNumber);
+
+                    // Update the result in the ArrayList and remove the used operands and operator
+                    arrayOfStrings.set(i - 1, String.valueOf(result));
+                    arrayOfStrings.remove(i);
+                    arrayOfStrings.remove(i);
+                    i--; // Adjust the index after removing elements
+                }
+            }
+        }
+            for (int i = 0; i < arrayOfStrings.size(); i++) {
+                String currentValue = arrayOfStrings.get(i);
+
+                if (currentValue.equals("*")) {
+                    if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                        float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
+                        float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
+                        float result = calculator.multiply(firstNumber, secondNumber);
+
+                        // Update the result in the ArrayList and remove the used operands and operator
+                        arrayOfStrings.set(i - 1, String.valueOf(result));
+                        arrayOfStrings.remove(i);
+                        arrayOfStrings.remove(i);
+                        i--; // Adjust the index after removing elements
+                    }
+                }
+            }
+
+        System.out.println(arrayOfStrings);
+
 
         for (int i = 0; i < arrayOfStrings.size(); i++) {
             String currentValue = arrayOfStrings.get(i);
 
-                if (currentValue.equals("*")) {
-                    float firstNumber = Float.parseFloat(stringArray[i - 1]);
-                    float secondNumber = Float.parseFloat(stringArray[i + 1]);
-                    float result = calculator.multiply(firstNumber, secondNumber);
-                    String stringedFloat = Float.toString(result);
-//                    arrayOfStrings.add(, stringedFloat);
-                    arrayOfStrings.remove(stringArray[i - 1]);
-                    arrayOfStrings.remove(stringArray[i + 1]);
-
-                }
-        }
-
-        for (int i = 0; i < stringArray.length; i++) {
-            String currentValue = stringArray[i];
             if (currentValue.equals("+")) {
-                float firstNumber = Float.parseFloat(stringArray[i - 1]);
-                float secondNumber = Float.parseFloat(stringArray[i + 1]);
-                System.out.println(calculator.add(firstNumber, secondNumber));
-                return;
+                if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                    float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
+                    float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
+                    float result = calculator.add(firstNumber, secondNumber);
+
+                    // Update the result in the ArrayList and remove the used operands and operator
+                    arrayOfStrings.set(i - 1, String.valueOf(result));
+                    arrayOfStrings.remove(i);
+                    arrayOfStrings.remove(i);
+                    i--; // Adjust the index after removing elements
+                }
             }
-
         }
-
-
-
-
-
-
+        System.out.println(arrayOfStrings);
 
 
     }
-
-
-
 }
