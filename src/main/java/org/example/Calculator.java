@@ -46,31 +46,45 @@ public class Calculator {
         Calculator calculator = new Calculator();
 
         Scanner scanner = new Scanner(System.in);
-        String string = scanner.nextLine();
 
 
-        String stringArray[] = string.split(" ");
+        String userCommand = " ";
+
+        while(true) {
+
+            ArrayList<String> arrayOfStrings = new ArrayList<>(); // main calculation space
+            Float lastResult = calculator.getResult(); // for the second loop add result to the array to chain it with the oncoming calculations
+            if(lastResult != 0.0){
+                arrayOfStrings.add(String.valueOf(lastResult));
+            }
+
+            String userInput = scanner.nextLine();
+
+            String stringArray[] = userInput.split(" ");
 
 
-        ArrayList<String> arrayOfStrings = new ArrayList<>();
-
-        for (int i = 0; i < stringArray.length; i++) {
-            arrayOfStrings.add(stringArray[i]);
-
-        }
 
 
-        // 12 + 12 - 2 * 5
-        // 12 + 12 - 10
-        // 24 + 10
-        // 34
+
+            for (int i = 0; i < stringArray.length; i++) {
+                arrayOfStrings.add(stringArray[i]);
+
+            }
+
+            // How the calculator works by executing for loops one by one
+            // 12 + 12 - 2 * 5 multiplication
+            // 12 + 12 - 10 addition
+            // 24 + 10 subtraction
+            // 34
 
 
-        System.out.println(arrayOfStrings);
-        for (int i = 0; i < arrayOfStrings.size(); i++) {
-            String currentValue = arrayOfStrings.get(i);
+            System.out.println(arrayOfStrings);
 
-            if (currentValue.equals("^")) {
+
+            for (int i = 0; i < arrayOfStrings.size(); i++) {
+                String currentValue = arrayOfStrings.get(i);
+
+                if (currentValue.equals("^")) {
 
                     double firstNumber = Double.parseDouble(arrayOfStrings.get(i - 1));
 
@@ -82,27 +96,27 @@ public class Calculator {
 
                     i--; // Adjust the index after removing elements
 
-            }
-        }
-
-
-        for (int i = 0; i < arrayOfStrings.size(); i++) {
-            String currentValue = arrayOfStrings.get(i);
-
-            if (currentValue.equals("**")) {
-                if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
-                    float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
-                    float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
-                    double result = calculator.toPower(firstNumber, secondNumber);
-
-                    // Update the result in the ArrayList and remove the used operands and operator
-                    arrayOfStrings.set(i - 1, String.valueOf(result));
-                    arrayOfStrings.remove(i);
-                    arrayOfStrings.remove(i);
-                    i--;
                 }
             }
-        }
+
+
+            for (int i = 0; i < arrayOfStrings.size(); i++) {
+                String currentValue = arrayOfStrings.get(i);
+
+                if (currentValue.equals("**")) {
+                    if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                        float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
+                        float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
+                        double result = calculator.toPower(firstNumber, secondNumber);
+
+                        // Update the result in the ArrayList and remove the used operands and operator
+                        arrayOfStrings.set(i - 1, String.valueOf(result));
+                        arrayOfStrings.remove(i);
+                        arrayOfStrings.remove(i);
+                        i--;
+                    }
+                }
+            }
             for (int i = 0; i < arrayOfStrings.size(); i++) {
                 String currentValue = arrayOfStrings.get(i);
 
@@ -114,7 +128,7 @@ public class Calculator {
                         float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
 
                         if (currentValue.equals("*")) {
-                            result = calculator.multiply(firstNumber,secondNumber);
+                            result = calculator.multiply(firstNumber, secondNumber);
                         } else if (currentValue.equals("/")) {
                             result = calculator.divide(firstNumber, secondNumber);
                         }
@@ -128,34 +142,51 @@ public class Calculator {
             }
 
 
-        System.out.println(arrayOfStrings);
+            System.out.println(arrayOfStrings);
 
 
-        for (int i = 0; i < arrayOfStrings.size(); i++) {
-            String currentValue = arrayOfStrings.get(i);
+            for (int i = 0; i < arrayOfStrings.size(); i++) {
+                String currentValue = arrayOfStrings.get(i);
 
-            if (currentValue.equals("+") || currentValue.equals("-")) {
+                if (currentValue.equals("+") || currentValue.equals("-")) {
 
-                if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
-                    float result = 0;
-                    float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
-                    float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
+                    if (i - 1 >= 0 && i + 1 < arrayOfStrings.size()) {
+                        float result = 0;
+                        float firstNumber = Float.parseFloat(arrayOfStrings.get(i - 1));
+                        float secondNumber = Float.parseFloat(arrayOfStrings.get(i + 1));
 
-                    if (currentValue.equals("-")) {
-                        result = calculator.subtract(firstNumber,secondNumber);
-                    } else if (currentValue.equals("+")) {
-                        result = calculator.add(firstNumber, secondNumber);
+                        if (currentValue.equals("-")) {
+                            result = calculator.subtract(firstNumber, secondNumber);
+                        } else if (currentValue.equals("+")) {
+                            result = calculator.add(firstNumber, secondNumber);
+                        }
+
+                        arrayOfStrings.set(i - 1, String.valueOf(result));
+                        arrayOfStrings.remove(i);
+                        arrayOfStrings.remove(i);
+                        i--;
                     }
-
-                    arrayOfStrings.set(i - 1, String.valueOf(result));
-                    arrayOfStrings.remove(i);
-                    arrayOfStrings.remove(i);
-                    i--;
                 }
             }
+            calculator.setResult(Float.parseFloat(arrayOfStrings.get(0)));
+
+            System.out.println("Result: " + calculator.result);
+            System.out.println("Do you wish to continue with your calculations?");
+            System.out.println("(Y)es");
+            System.out.println("(N)o");
+
+            userCommand =scanner.nextLine();
+
+            if (userCommand.equalsIgnoreCase("Yes") || userCommand.equalsIgnoreCase("y")) {
+                System.out.println("Enter your calculation");
+                String nextInput = scanner.nextLine();
+                userInput = nextInput;
+            } else if (userCommand.equalsIgnoreCase("No") || userCommand.equalsIgnoreCase("n")) {
+                System.out.println("Final result: " + calculator.getResult());
+                break;
+            } else {
+                System.out.println("Invalid input");
+            }
         }
-        System.out.println(arrayOfStrings);
-
-
     }
 }
