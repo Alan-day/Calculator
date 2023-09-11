@@ -179,8 +179,8 @@ public class Calculator {
 
             if (userCommand.equalsIgnoreCase("Yes") || userCommand.equalsIgnoreCase("y")) {
                 System.out.println("Enter your calculation");
-                String nextInput = scanner.nextLine();
-                userInput = nextInput;
+                System.out.println("Current result: " + calculator.getResult());
+
             } else if (userCommand.equalsIgnoreCase("No") || userCommand.equalsIgnoreCase("n")) {
                 System.out.println("Final result: " + calculator.getResult());
                 break;
