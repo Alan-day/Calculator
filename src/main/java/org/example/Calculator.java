@@ -40,7 +40,7 @@ public class Calculator {
     } // ** symbol
 
 
-    public static void main(String[] args) {
+    public static void calculate() {
 
 
         Calculator calculator = new Calculator();
@@ -182,6 +182,7 @@ public class Calculator {
                 System.out.println("Current result: " + calculator.getResult());
 
             } else if (userCommand.equalsIgnoreCase("No") || userCommand.equalsIgnoreCase("n")) {
+                calculator.setResult(lastResult);
                 System.out.println("Final result: " + calculator.getResult());
                 break;
             } else {
