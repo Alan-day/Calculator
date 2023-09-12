@@ -39,9 +39,25 @@ public class Calculator {
         return square;
     } // ** symbol
 
-
+    public static boolean containsLetters(String input) {
+        return input.matches(".*[a-zA-Z].*");
+    }
     public static void calculate() {
+        System.out.println("  _____________________");
+        System.out.println(" |  _________________  |");
+        System.out.println(" | |                 | |");
+        System.out.println(" | |  7  8  9  +     | |");
+        System.out.println(" | |  4  5  6  -     | |");
+        System.out.println(" | |  1  2  3  *     | |");
+        System.out.println(" | |  0  .  =  /     | |");
+        System.out.println(" | |_________________| |");
+        System.out.println(" |  _________________  |");
+        System.out.println(" | |                 | |");
+        System.out.println(" | |                 | |");
+        System.out.println(" | |_________________| |");
+        System.out.println(" |_____________________|");
 
+        System.out.println("Input your calculation:");
 
         Calculator calculator = new Calculator();
 
@@ -50,15 +66,25 @@ public class Calculator {
 
         String userCommand = " ";
 
-        while(true) {
+        while (true) {
 
             ArrayList<String> arrayOfStrings = new ArrayList<>(); // main calculation space
             Float lastResult = calculator.getResult(); // for the second loop add result to the array to chain it with the oncoming calculations
-            if(lastResult != 0.0){
+            if (lastResult != 0.0) {
                 arrayOfStrings.add(String.valueOf(lastResult));
             }
 
             String userInput = scanner.nextLine();
+
+
+            if (containsLetters(userInput)) {
+                System.out.println("Invalid input. Contains letters.");
+                scanner.close();
+            }
+
+
+
+
 
             String stringArray[] = userInput.split(" ");
 
